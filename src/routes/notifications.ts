@@ -10,7 +10,7 @@ let notifications: Notification[] = [];
 
 // Get all notifications
 router.get("/", (_req: Request, res: Response) => {
-  res.json(notifications);
+  return res.json(notifications);
 });
 
 // Create a new notification
@@ -60,7 +60,7 @@ router.post(
       }
     }
 
-    res.status(201).json(notification);
+    return res.status(201).json(notification);
   }
 );
 
@@ -87,21 +87,21 @@ router.post("/:id/send-email", async (req: Request<{ id: string }>, res: Respons
 
     if (emailResult.success) {
       notification.emailSent = true;
-      res.json({ 
+      return res.json({ 
         success: true, 
         message: "Email sent successfully",
         messageId: emailResult.messageId,
         notification 
       });
     } else {
-      res.status(500).json({ 
+      return res.status(500).json({ 
         success: false, 
         error: emailResult.error 
       });
     }
   } catch (error) {
     console.error(`Error sending email for notification ${id}:`, error);
-    res.status(500).json({ 
+    return res.status(500).json({ 
       success: false, 
       error: "Failed to send email" 
     });
@@ -118,16 +118,16 @@ router.patch("/:id/read", (req: Request<{ id: string }>, res: Response) => {
   }
 
   notification.read = true;
-  res.json(notification);
+  return res.json(notification);
 });
 
 // Get notifications for a specific user
 router.get(
   "/user/:userId",
   (req: Request<{ userId: string }>, res: Response) => {
-    const { userId } = req.params;
-    const userNotifications = notifications.filter((n) => n.userId === userId);
-    res.json(userNotifications);
+      const { userId } = req.params;
+  const userNotifications = notifications.filter((n) => n.userId === userId);
+  return res.json(userNotifications);
   }
 );
 
