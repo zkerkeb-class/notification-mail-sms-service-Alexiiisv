@@ -1,0 +1,15 @@
+### Variables d'environnement pour REST Client
+@baseUrl = http://localhost:3005
+
+### 1. Créer une notification
+POST {{baseUrl}}/api/notifications
+Content-Type: application/json
+
+{
+  "title": "Nouvelle réservation",
+  "message": "Votre réservation est confirmée",
+  "userId": "user123",
+  "userEmail": "alvelleine@gmail.com",
+  "userName": "Alexis",
+  "sendEmail": true
+}
